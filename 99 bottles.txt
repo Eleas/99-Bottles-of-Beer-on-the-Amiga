@@ -11,7 +11,7 @@
 ;
 ; Some optimizations have been made, most saliently the branching and
 ; use of an address register to move the starting address of a string.
-; Other optimizations may suggest themselves. If you see them, please
+; Other optimizations may suggest themselves. If you see any, please
 ; give me a shout-out.
 
 print:	MACRO
