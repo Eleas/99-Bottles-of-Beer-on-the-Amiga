@@ -1,0 +1,134 @@
+; Name:		99 bottles of beer on the wall.
+; Author:	Bj?rn Paulsen
+; Version:	1.1
+; Assembler:	ASM-One V1.48
+; Size:		584 bytes (optimized)
+; 
+; For those who always wanted a drinking song on the Amiga, this 
+; routine is just the thing. It prints out the full text of the drinking 
+; song "99 Bottles of Beer on the Wall," and is polite about being run
+; outside of a Dos environment (i.e. won't crash the Amiga).
+;
+; Some optimizations have been made, most saliently the branching and
+; use of an address register to move the starting address of a string.
+; Other optimizations may suggest themselves. If you see them, please
+; give me a shout-out.
+
+print:	MACRO
+	move.l	\1, d1
+	jsr	PutStr(a6)
+	ENDM
+
+SysBase = 4
+
+; Library vector offsets
+OpenLibrary  = -552
+CloseLibrary = -414
+PutStr       = -948
+
+; Actual code
+	lea	DosName,a1
+	moveq   #36,d0
+	movea.l	SysBase,a6
+	jsr	OpenLibrary(a6)
+
+	tst.b	d0	; Did it work?
+	beq.w	NoDos	; If not, we exit
+	movea.l d0,a6	; We store the pointer
+
+	moveq   #99,d4 ; number of bottles
+	
+	; Print first line
+bottle_loop:
+	move.b	#'N',no_more	; if used, we capitalize
+	bsr.w	bottletext
+	print	#of_beer
+	print   #on_the_wall
+	print	#comma
+	bsr.s 	bottletext
+	print	#of_beer
+	print   #period
+	
+	; Print second line
+	tst.b	d4
+	beq.s	go_to_the_store
+	print	#take_one
+	subq.b  #1, d4
+	bra.s	go_to_the_store_end
+
+go_to_the_store:
+	moveq   #99, d4
+	print   #go_to_store
+
+go_to_the_store_end:
+	move.b	#'n',no_more
+	bsr.s   bottletext
+	print   #of_beer
+	print	#on_the_wall
+	print   #period
+	print   #break
+	cmpi.b	#99, d4
+	bne.w	bottle_loop	
+	move.l	a6,a1
+	movea.l	SysBase,a6
+	jsr	CloseLibrary(a6)
+
+NoDos	clr.l	d0
+	rts
+
+; Subroutine for printing the bottle text
+bottletext:
+
+; Echo out the number, or "no more" if bottles are 0
+	tst.b   d4
+	bne.s	bottle_count_nonzero
+	print   #no_more
+	move.b	#'n',no_more ; Restore small initial letter
+	bra.s	bottle_count_nonzero_end
+
+bottle_count_nonzero:
+	move.l	#counter+1, a4
+	move.l	d4, d5
+	divu.w	#10, d5
+	swap	d5
+	addi	#'0', d5
+	move.b	d5, counter+1
+	swap    d5
+	addi	#'0', d5
+	move.b	d5, counter
+	cmpi.w	#9, d4
+	bls.s	single_digit
+	subq	#1, a4
+
+single_digit:
+	print	a4
+
+bottle_count_nonzero_end:
+; Fix the suffix (if the number of bottles is 1, no 's'
+	cmpi.b	#1,d4
+	bne.s	post_removed_s
+	move.b  #0,bottle+7
+	
+post_removed_s:
+	tst    d4
+	bne.s    post_appended_s
+	move.b	#'s',bottle+7
+
+post_appended_s:
+	print 	#bottle
+	rts
+
+; Data
+
+DosName		dc.b	"dos.library",0
+counter		dc.b	"  ",0
+bottle		dc.b	" bottles",0
+no_more		dc.b    "no more",0
+of_beer		dc.b	" of beer",0
+on_the_wall	dc.b	" on the wall",0
+comma		dc.b	", ",0
+period		dc.b	". ",10,0
+take_one	dc.b	"Take one down and pass it around, ",0
+go_to_store	dc.b	"Go to the store and buy some more, ",0
+break		dc.b	10,0
+
