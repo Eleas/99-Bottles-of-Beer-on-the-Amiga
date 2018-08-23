@@ -1,5 +1,5 @@
 ; Name:		99 bottles of beer on the wall.
-; Author:	Bj?rn Paulsen
+; Author:	Björn Paulsen
 ; Version:	1.1
 ; Assembler:	ASM-One V1.48
 ; Size:		584 bytes (optimized)
