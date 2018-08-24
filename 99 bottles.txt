@@ -44,7 +44,7 @@ bottle_loop:
 	bsr.w	bottletext
 	print	#of_beer
 	print   #on_the_wall
-	move.l	#take_one+30, d1  ; reads the comma part of that string
+	move.l	#take_one+32, d1  ; reads the comma part of that string
 	jsr	PutStr(a6)
 	bsr.s 	bottletext
 	print	#of_beer
