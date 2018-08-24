@@ -1,8 +1,8 @@
-; Name:		99 bottles of beer on the wall
-; Author:	Björn Paulsen
-; Version:	1.1
+; Name:		99 bottles of beer on the wall.
+; Author:	Bj?rn Paulsen
+; Version:	1.2
 ; Assembler:	ASM-One V1.48
-; Size:		584 bytes (optimized)
+; Size:		572 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -11,7 +11,7 @@
 ;
 ; Some optimizations have been made, most saliently the branching and
 ; use of an address register to move the starting address of a string.
-; Other optimizations may suggest themselves. If you see any, please
+; Other optimizations may suggest themselves. If you see them, please
 ; give me a shout-out.
 
 print:	MACRO
@@ -27,24 +27,25 @@ CloseLibrary = -414
 PutStr       = -948
 
 ; Actual code
-	lea	DosName,a1
-	moveq   #36,d0
-	movea.l	SysBase,a6
+	lea	DosName, a1
+	moveq   #36, d0
+	movea.l	SysBase.w, a6
 	jsr	OpenLibrary(a6)
 
 	tst.b	d0	; Did it work?
 	beq.w	NoDos	; If not, we exit
-	movea.l d0,a6	; We store the pointer
+	movea.l d0, a6	; We store the pointer
 
-	moveq   #99,d4 ; number of bottles
+	moveq   #99, d4 ; number of bottles
 	
 	; Print first line
 bottle_loop:
-	move.b	#'N',no_more	; if used, we capitalize
+	move.b	#'N', no_more	; if used, we capitalize
 	bsr.w	bottletext
 	print	#of_beer
 	print   #on_the_wall
-	print	#comma
+	move.l	#take_one+30, d1  ; reads the comma part of that string
+	jsr	PutStr(a6)
 	bsr.s 	bottletext
 	print	#of_beer
 	print   #period
@@ -61,7 +62,7 @@ go_to_the_store:
 	print   #go_to_store
 
 go_to_the_store_end:
-	move.b	#'n',no_more
+	move.b	#'n', no_more
 	bsr.s   bottletext
 	print   #of_beer
 	print	#on_the_wall
@@ -69,11 +70,11 @@ go_to_the_store_end:
 	print   #break
 	cmpi.b	#99, d4
 	bne.w	bottle_loop	
-	move.l	a6,a1
-	movea.l	SysBase,a6
+	move.l	a6, a1
+	movea.l	SysBase.w,a6
 	jsr	CloseLibrary(a6)
 
-NoDos	clr.l	d0
+NoDos	moveq	#0, d0
 	rts
 
 ; Subroutine for printing the bottle text
@@ -104,17 +105,15 @@ single_digit:
 	print	a4
 
 bottle_count_nonzero_end:
+	move.b	#'s', bottle+7
+
 ; Fix the suffix (if the number of bottles is 1, no 's'
-	cmpi.b	#1,d4
+	cmpi.b	#1, d4
 	bne.s	post_removed_s
-	move.b  #0,bottle+7
+	move.b  #0, bottle+7
 	
 post_removed_s:
-	tst    d4
-	bne.s    post_appended_s
-	move.b	#'s',bottle+7
 
-post_appended_s:
 	print 	#bottle
 	rts
 
@@ -126,7 +125,6 @@ bottle		dc.b	" bottles",0
 no_more		dc.b    "no more",0
 of_beer		dc.b	" of beer",0
 on_the_wall	dc.b	" on the wall",0
-comma		dc.b	", ",0
 period		dc.b	". ",10,0
 take_one	dc.b	"Take one down and pass it around, ",0
 go_to_store	dc.b	"Go to the store and buy some more, ",0
