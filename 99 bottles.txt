@@ -1,8 +1,8 @@
-; Name:		99 bottles of beer on the wall.
+; Name:	99 bottles of beer on the wall.
 ; Author:	Björn Paulsen
 ; Version:	1.3
 ; Assembler:	ASM-One V1.48
-; Size:		548 bytes (optimized)
+; Size:	548 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
