@@ -23,7 +23,7 @@ The original executable was 624 bytes in size. Just by optimizing and being mode
 * With a bit of thought, you can write efficient code without sacrificing clarity.
 * What happens under the hood of the computer is always simpler than you think.
 * If you can manipulate data in a register, do it.
-* Organization of your code can matter on a byte level (i.e. jumps can be made shorter).
+* Organization of your code can matter on a byte level (i.e. jumps can be made shorter, addressing made PC-relative, and string data reused).
 * Don't assume the hardware will be a blank slate on execution of your code.
 
 # Does this have any practical application?
