@@ -17,7 +17,7 @@ One, I always wanted to learn Assembly, and it turned out to be surprisingly fun
 # How's that, exactly?
 Modern platforms have all the memory and number-crunching power you need. That breeds laziness. The Amiga doesn't reward that: it rewards exactitude and, to some degree, art. When you write code like this, you learn to be creative. You need to be. 
 
-The original executable was 624 bytes in size. Just by optimizing and being moderately clever I was able to trim off 76 bytes while retaining readability. By various other hooks and crooks, and finally sacrificing legibility, I shaved off another 92 bytes. Knowing the code intimately turned out to be helpful. This is fairly simple code, but even so, I found at least two fatal bugs, all because I had to pay attention.
+The original executable was 624 bytes in size. Just by optimizing and being moderately clever I was able to trim off 76 bytes while retaining readability. By hook and crook, and finally sacrificing legibility, I eventually shaved off another 92 bytes. Knowing the code intimately turned out to be helpful. This is fairly simple code, but even so, I found at least two fatal bugs, all because I had to pay attention.
 
 # What were the lessons learned, then?
 * With a bit of thought, you can write fairly efficient code without sacrificing clarity.
