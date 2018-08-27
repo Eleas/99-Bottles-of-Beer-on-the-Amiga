@@ -1,8 +1,8 @@
-; Name:		99 bottles of beer on the wall.
-; Author:	Bjorn Paulsen
+; Name:	99 bottles of beer on the wall.
+; Author:	Björn Paulsen
 ; Version:	1.4
 ; Assembler:	ASM-One V1.48
-; Size:		456 bytes (optimized)
+; Size:	456 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -11,8 +11,14 @@
 ;
 ; Some optimizations have been made, most saliently the branching and
 ; use of an address register to move the starting address of a string.
+; PC-relative addressing worked wonders, but the single biggest impact
+; was consolidating the data as much as possible: fewer but longer 
+; strings mean fewer syscalls to print them, and it all adds up.
+;
 ; Other optimizations may suggest themselves. If you see them, please
-; give me a shout-out.
+; give me a shout-out. Right now, the address registers are used to
+; store and reuse string addresses, and we also use some offsets,
+; which though it looks horrible does confer space savings.
 
 print:	MACRO
 	move.l	\1, d1
