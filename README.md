@@ -27,6 +27,7 @@ The original executable was 624 bytes in size. Just by optimizing and being mode
 * Don't assume the hardware will be a blank slate on execution of your code.
 * Loading things into register looks more verbose, but is generally more compact and produces better/more flexible code.
 * Don't overthink. Cutting text up into chunks looked more efficient (allowing for reuse, I thought), but in practice turned out the reverse.
+* Correct choice of algorithm will have a much bigger impact on your code than piecemeal tweaking. 
 
 # Does this have any practical application?
 Unless you're soon to be stuck in a cabin in the woods with only an A500 and a lot of beer for company, I doubt it. If by some chance this actually happens to you and my code managed to be of assistance, I would be absolutely _delighted_ to hear from you.
