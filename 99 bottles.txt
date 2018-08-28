@@ -48,7 +48,7 @@ PutStr       = -948
 	; a1	volatile due to function calls (sadly)
 	lea.l	take_one(pc), a2
 	lea.l	no_more(pc), a3
-	; a6   obviously we need the OpenLibrary pointer
+	; a6   obviously we need the ExecBase pointer
 
 	; Print first line
 bottle_loop:
