@@ -17,7 +17,9 @@ One, I always wanted to learn Assembly, and it turned out to be surprisingly fun
 # How's that, exactly?
 Modern platforms have all the memory and number-crunching power you need. That breeds laziness. The Amiga doesn't reward that: it rewards exactitude and, to some degree, art. When you write code like this, you learn to be creative. You need to be. 
 
-The original executable was 624 bytes in size. Just by optimizing and being moderately clever I was able to trim off 76 bytes while retaining readability. By hook and crook, and finally sacrificing legibility, I eventually shaved off another 92 bytes. Knowing the code intimately turned out to be helpful. This is fairly simple code, but even so, I found at least two fatal bugs, all because I had to pay attention.
+The original executable was 624 bytes in size. Just by optimizing and being moderately clever I was able to trim off 76 bytes while retaining readability. By hook and crook, and finally sacrificing legibility, I eventually shaved off another 92 bytes. And in a fit of insanity, I then doubled down to bring it down another 64 bytes, to 396 bytes. I could go another 10 or so, I think, but I doubt there's much more give in the data at this point.
+
+Anyhow, painstaking optimization forced me to learn the code, which was surprisingly useful. This is fairly simple code, but even so, I found at least two fatal bugs, all because I had to pay attention.
 
 # What were the lessons learned, then?
 * With a bit of thought, you can write fairly efficient code without sacrificing clarity.
@@ -27,7 +29,8 @@ The original executable was 624 bytes in size. Just by optimizing and being mode
 * Don't assume the hardware will be a blank slate on execution of your code.
 * Loading things into register looks more verbose, but is generally more compact and produces better/more flexible code.
 * Don't overthink. Cutting text up into chunks looked more efficient (allowing for reuse, I thought), but in practice turned out the reverse.
-* Correct choice of algorithm will have a much bigger impact on your code than piecemeal tweaking. 
+* Correct choice of algorithm will have a much bigger impact on your code than piecemeal tweaking.
+* Always comment. Your comments are what help you spot opportunity for improvements.
 
 # Does this have any practical application?
 Unless you're soon to be stuck in a cabin in the woods with only an A500 and a lot of beer for company, I doubt it. If by some chance this actually happens to you and my code managed to be of assistance, I would be absolutely _delighted_ to hear from you.
