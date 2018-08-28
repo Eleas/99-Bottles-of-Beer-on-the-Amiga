@@ -1,8 +1,8 @@
-; Name:	99 bottles of beer on the wall.
-; Author:	Björn Paulsen
-; Version:	1.4
+; Name:		99 bottles of beer on the wall.
+; Author:	Bjorn Paulsen
+; Version:	1.5
 ; Assembler:	ASM-One V1.48
-; Size:	456 bytes (optimized)
+; Size:		396 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -43,44 +43,51 @@ PutStr       = -948
 	movea.l d0, a6	; We store the pointer
 
 	moveq   #99, d4 ; number of bottles
-	
+
+	; Invariants. These are registers we will not change
+	lea.l	take_one(pc), a2
+	lea.l	no_more(pc), a3
+	; a6   obviously we need the OpenLibrary pointer
+
 	; Print first line
 bottle_loop:
-	move.b	#'N', no_more	; if used, we capitalize
+	move.b	#'N', (a3)	; if used, we capitalize
 	bsr.s	bottletext
-	lea.l	on_the_wall, a1
-	print   a1
-	lea.l	take_one, a2
-	move.l	a2, d1  ; reads the comma part of that string
-	add	#32, d1 ; but offset 32 spaces
+	move.b	#'n', (a3)	
+	move.l	a3, d1
+	addq	#8, d1		; no_more + 8 becomes on_the_wall string
+	jsr	PutStr(a6)
+	move.l	a2, d1  	; reads the comma part of that string
+	add	#32, d1 	; but offset 32 spaces
 	jsr	PutStr(a6)
 	bsr.s 	bottletext
 	move.l	a2, d1
-	subq	#4, d1
+	subq	#4, d1		; take_one-4 becomes period
 	jsr	PutStr(a6)
 	
 	; Print second line
 	tst.b	d4
 	beq.s	go_to_the_store
 	print	a2
-	subq.b  #1, d4
+	subq.b  #1, d4		; remove one bottle
 	bra.s	go_to_the_store_end
 
 go_to_the_store:
 	moveq   #99, d4
 	move.l	a2, d1
-	add	#35, d1
+	add	#35, d1		; go_to_store is 35 chars after take_one
 	jsr	PutStr(a6)
 
 go_to_the_store_end: 	
-	move.b	#'n', no_more
 	bsr.s   bottletext
-	print	a1
-	move.l	a2, d1
-	subq	#4, d1
+	move.l	a3, d1
+	addq	#8, d1		; no_more text + 8 becomes on_the_wall
 	jsr	PutStr(a6)
 	move.l	a2, d1
-	subq	#2, d1
+	subq	#4, d1		; take_one - 4 becomes period text
+	jsr	PutStr(a6)
+	move.l	a2, d1
+	subq	#2, d1		; take_one - 2 becomes line break after period
 	jsr	PutStr(a6)
 	cmpi.b	#99, d4
 	bne.b	bottle_loop	
@@ -99,36 +106,34 @@ bottletext:
 ; Echo out the number, or "no more" if bottles are 0
 	tst.b   d4
 	bne.s	bottle_count_nonzero
-	lea.l	no_more, a3
-	print   a3
-	move.b	#'n',no_more ; Restore small initial letter
-	addq    #2, a4
+	move.l	a3, d1
+	jsr	PutStr(a6)
+	addq    #2, a4	      ; a4 is set to position just after numbers
 	bra.s	bottle_count_nonzero_end
 
 bottle_count_nonzero:
 	move.l	d4, d5
 	divu.w	#10, d5
-	move.b	d5, (a4)
-	add.b	#'0',(a4)+
-	swap	d5
-	move.b  d5, (a4)
-	add.b	#'0', (a4)
+	move.w	#$3030, (a4)  ; We set the first two letters of bottle to '0'
+	add.b	d5, (a4)+     ; Incrementing a4 and adding first number, thus-
+	move.l	a4, a5	      ; ...storing a4+1 as a5, and then...
+	addq	#8, a5	      ; ...we can addq to just reach bottle plural pos!
+	swap	d5	      ; we swap the remainder and quotient
+	add.b   d5, (a4)
 	cmpi.w	#9, d4
-	bls.s	single_digit
+	bls.s	bottle_count_nonzero_end
 	subq	#1, a4
 
-single_digit:
-
 bottle_count_nonzero_end:
-	move.b	#'s', bottle+9
+	move.b	#'s', (a5)    ; now we can add plural letter by indirection 
 
 ; Fix the suffix (if the number of bottles is 1, no 's'
 	cmpi.b	#1, d4
 	bne.s	post_removed_s
-	move.b  #30, bottle+9
+	move.b	#30, (a5)     ; empty letter for nonplural situations
 	
 post_removed_s:
-	print a4
+	print a4	      ; finally we echo the constructed bottle text
 	rts
 
 ; Data
