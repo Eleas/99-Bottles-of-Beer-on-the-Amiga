@@ -4,7 +4,7 @@ Being an implementation of "99 Bottles of Beer on the Wall" for the Commodore Am
 # What's an Amiga?
 Used to be the future. 
 
-Seriously, though, an explanation would take too long. Suffice to say it was an 8 MHz microcomputer produced by Commodore when I was a boy. It was at least 10 years ahead of its day, and regularly ran rings around machines with ten times the clock speed. To this day, it remains my favorite computer.
+Seriously, though, an explanation would take too long. Suffice to say it was a 7 MHz microcomputer produced by Commodore when I was a boy. It was at least 10 years ahead of its day, and regularly ran rings around machines with ten times the clock speed. To this day, it remains my favorite computer.
 
 # So what's this?
 Well, you see, there's this old drinking song / joke that starts, "99 bottles of beer on the wall...". When run, this routine prints out the song in the CLI window on the Amiga.
