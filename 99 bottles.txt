@@ -1,8 +1,8 @@
-; Name:		99 bottles of beer on the wall.
+; Name:	99 bottles of beer on the wall.
 ; Author:	Bjorn Paulsen
 ; Version:	1.5
 ; Assembler:	ASM-One V1.48
-; Size:		396 bytes (optimized)
+; Size:	396 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -44,7 +44,8 @@ PutStr       = -948
 
 	moveq   #99, d4 ; number of bottles
 
-	; Invariants. These are registers we will not change
+	; Invariants. These are registers we will not change.
+	; a1	volatile due to function calls (sadly)
 	lea.l	take_one(pc), a2
 	lea.l	no_more(pc), a3
 	; a6   obviously we need the OpenLibrary pointer
@@ -145,5 +146,3 @@ on_the_wall	dc.b	" on the wall",0
 period		dc.b	". ",10,0
 take_one	dc.b	"Take one down and pass it around, ",0
 go_to_store	dc.b	"Go to the store and buy some more, ",0
-
-
