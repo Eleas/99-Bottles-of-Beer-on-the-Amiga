@@ -1,8 +1,8 @@
 ; Name:	99 bottles of beer on the wall.
 ; Author:	Björn Paulsen
-; Version:	1.5
+; Version:	1.6 (final)
 ; Assembler:	ASM-One V1.48
-; Size:	396 bytes (optimized)
+; Size:	548 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -19,6 +19,17 @@
 ; give me a shout-out. Right now, the address registers are used to
 ; store and reuse string addresses, and we also use some offsets,
 ; which though it looks horrible does confer space savings.
+; 
+; Update: 
+; 
+; On reflection and code review (i.e. the dudes at the Amiga Code 
+; FB group picking it apart), it turns out this code had a few bugs.
+; Most saliently, it requires Kickstart 2.0+ to run. This is due to 
+; its biggest space saver turned an the Achilles Heel, the PutStr
+; function, which is what we print with rather than the older
+; Write(). PutStr() is simpler, thus making for comparatively 
+; leightweight calls. On the downside, this means a no-go on your
+; typical A500 or A2000. :-(
 
 print:	MACRO
 	move.l	\1, d1
@@ -38,7 +49,7 @@ PutStr       = -948
 	movea.l	SysBase.w, a6
 	jsr	OpenLibrary(a6)
 
-	tst.b	d0	; Did it work?
+	tst.l	d0	; Did it work?
 	beq.b	NoDos	; If not, we exit
 	movea.l d0, a6	; We store the pointer
 
