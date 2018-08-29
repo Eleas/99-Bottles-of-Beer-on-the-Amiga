@@ -25,7 +25,7 @@
 ; On reflection and code review (i.e. the dudes at the Amiga Code 
 ; FB group picking it apart), it turns out this code had a few bugs.
 ; Most saliently, it requires Kickstart 2.0+ to run. This is due to 
-; its biggest space saver turned an the Achilles Heel, the PutStr
+; its biggest space saver turned an Achilles Heel, i.e. the PutStr
 ; function, which is what we print with rather than the older
 ; Write(). PutStr() is simpler, thus making for comparatively 
 ; leightweight calls. On the downside, this means a no-go on your
