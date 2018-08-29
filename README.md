@@ -7,7 +7,7 @@ Used to be the future.
 Seriously, though, an explanation would take too long. Suffice to say it was a 7 MHz microcomputer produced by Commodore when I was a boy. It was at least 10 years ahead of its day, and regularly ran rings around machines with ten times the clock speed. To this day, it remains my favorite computer.
 
 # So what's this?
-Well, you see, there's this old drinking song / joke that starts, "99 bottles of beer on the wall...". When run, this routine prints out the song in the CLI window on the Amiga.
+Well, you see, there's this old drinking song / joke that starts, "99 bottles of beer on the wall...". When run, this routine prints out the song in the CLI window on the Amiga. This works only on OS 2.0 and up, because I make stupid mistakes.
 
 # Isn't this program useless? I mean, entirely useless? Why write this?
 Yes, yes, and for two reasons. 
@@ -31,6 +31,7 @@ Anyhow, painstaking optimization forced me to learn the code, which was surprisi
 * Don't overthink. Cutting text up into chunks looked more efficient (allowing for reuse, I thought), but in practice turned out the reverse.
 * Correct choice of algorithm will have a much bigger impact on your code than piecemeal tweaking.
 * Always comment. Your comments are what help you spot opportunity for improvements.
+* Seriously, OS 2.0 was a massive improvement. I mean it.
 
 # Does this have any practical application?
 Unless you're soon to be stuck in a cabin in the woods with only an A500 and a lot of beer for company, I doubt it. If by some chance this actually happens to you and my code managed to be of assistance, I would be absolutely _delighted_ to hear from you.
