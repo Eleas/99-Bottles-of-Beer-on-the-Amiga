@@ -2,7 +2,7 @@
 ; Author:	Björn Paulsen
 ; Version:	1.6 (final)
 ; Assembler:	ASM-One V1.48
-; Size:	548 bytes (optimized)
+; Size:	396 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
