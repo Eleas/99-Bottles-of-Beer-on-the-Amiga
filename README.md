@@ -1,5 +1,5 @@
 # 99 Bottles of Beer, Amiga style
-Being an implementation of "99 Bottles of Beer on the Wall" for the Commodore Amiga.
+Implements the song "99 Bottles of Beer on the Wall" in a CLI window.
 
 # What's an Amiga?
 Used to be the future. 
