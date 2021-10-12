@@ -4,15 +4,19 @@ Implements the song "99 Bottles of Beer on the Wall" in a CLI window.
 # What's an Amiga?
 Used to be the future. 
 
-Seriously, though, an explanation would take too long. Suffice to say it was a 7 MHz home computer produced by Commodore when I was a boy. It was at least 10 years ahead of its time, and regularly ran rings around machines with ten times the clock speed. To this day, it remains my favorite computer.
+Seriously, though, an explanation would take too long. Suffice to say it was a 7 MHz home computer produced by Commodore when I was a boy. It was at least 10 years ahead of its time, and regularly ran rings around machines with ten times the clock speed and memory. To this day, it remains my favorite computer.
 
 # So what's this?
-Well, you see, there's this old drinking song / joke that starts, "99 bottles of beer on the wall...". When run, this routine prints out the song in the CLI window on the Amiga. This works only on OS 2.0 and up, because I make stupid mistakes.
+Well, you see, there's this old drinking song / joke that starts, "99 bottles of beer on the wall...". The lyrics repeat one hundred times, then the song ends. 
+
+So, I thought I'd do something with the concept. When run, the 99bottles routine prints out the lyrics of the song in CLI. This works only on OS 2.0 and up, because I make stupid mistakes.
 
 # Isn't this program useless? I mean, entirely useless? Why write this?
 Yes, yes, and for two reasons. 
 
 One, I always wanted to learn Assembly, and it turned out to be surprisingly fun. Two, it's an exercise in optimization and really, truly understanding both the code and the underlying hardware.
+
+Optimization is for size, not speed, by the way. In terms of speed, it's downright inefficient.
 
 # How's that, exactly?
 Modern platforms have all the memory and number-crunching power you need. That breeds laziness. The Amiga doesn't reward that: it rewards exactitude and, to some degree, art. When you write code like this, you learn to be creative. You need to be. 
@@ -34,4 +38,4 @@ Anyhow, painstaking optimization forced me to learn the code, which was surprisi
 * Seriously, OS 2.0 was a massive improvement. I mean it.
 
 # Does this have any practical application?
-Unless you're soon to be stuck in a cabin in the woods with only an A500 and a lot of beer for company, I doubt it. If by some chance this actually happens to you and my code managed to be of assistance, I would be absolutely _delighted_ to hear from you.
+Unless you're soon to be stuck in a cabin in the woods with only an Amiga and a lot of beer for company, I doubt it. If by some chance this actually happens to you and my code managed to be of assistance, I would be absolutely _delighted_ to hear from you.
