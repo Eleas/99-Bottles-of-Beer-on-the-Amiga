@@ -7,7 +7,7 @@ Used to be the future.
 Seriously, though, an explanation would take too long. Suffice to say it was a 7 MHz home computer produced by Commodore when I was a boy. It was at least 10 years ahead of its time, and regularly ran rings around machines with ten times the clock speed and memory. To this day, it remains my favorite computer.
 
 # So what's this?
-Well, you see, there's this old drinking song / joke that starts, "99 bottles of beer on the wall...". The lyrics repeat one hundred times, then the song ends. 
+Well, you see, there's this old drinking song (possibly apocryphal) that starts, "99 bottles of beer on the wall...". The lyrics repeat one hundred times, then the song ends. It's like the Ten Days of Christmas, only it'll leave you short one liver.
 
 So, I thought I'd do something with the concept. When run, the 99bottles routine prints out the lyrics of the song in CLI. This works only on OS 2.0 and up, because I make stupid mistakes.
 
