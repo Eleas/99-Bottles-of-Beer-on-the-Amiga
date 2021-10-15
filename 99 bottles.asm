@@ -1,8 +1,8 @@
 ; Name:	99 bottles of beer on the wall.
 ; Author:	Björn Paulsen
-; Version:	1.6 (final)
-; Assembler:	ASM-One V1.48
-; Size:	396 bytes (optimized)
+; Version:	1.7 (final)
+; Assembler:	ASM-Two 0.96w
+; Size:	404 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -14,146 +14,141 @@
 ; PC-relative addressing worked wonders, but the single biggest impact
 ; was consolidating the data as much as possible: fewer but longer 
 ; strings mean fewer syscalls to print them, and it all adds up.
+; Also, the 68000 processor having BDC arithmetic proved helpful;
+; it meant I could drop conversion routines.
 ;
 ; Other optimizations may suggest themselves. If you see them, please
 ; give me a shout-out. Right now, the address registers are used to
 ; store and reuse string addresses, and we also use some offsets,
 ; which though it looks horrible does confer space savings.
 ; 
-; Update: 
-; 
-; On reflection and code review (i.e. the dudes at the Amiga Code 
-; FB group picking it apart), it turns out this code had a few bugs.
-; Most saliently, it requires Kickstart 2.0+ to run. This is due to 
-; its biggest space saver turned an Achilles Heel, i.e. the PutStr
-; function, which is what we print with rather than the older
-; Write(). PutStr() is simpler, thus making for comparatively 
-; leightweight calls. On the downside, this means a no-go on your
-; typical A500 or A2000. :-(
+; Note: This routine has been rewritten to be compliant with OS 1.3. 
+; It's still reasonably compact, I feel, but v36 in general and PutStr()
+; in particular would have been very helpful. The previous version 
+; would crash a typical A500 or A200; while this version is a mere
+; 8 bytes larger, the tradeoff would seem to be worth it.
 
-print:	MACRO
-	move.l	\1, d1
-	jsr	PutStr(a6)
-	ENDM
 
-SysBase = 4
+ExecBase:        equ 4
+LVOOpenLibrary:  equ -552
+LVOCloseLibrary: equ -414
+LVOOutput:       equ -60
+LVOWrite:        equ -48
 
-; Library vector offsets
-OpenLibrary  = -552
-CloseLibrary = -414
-PutStr       = -948
+  move.l (ExecBase).w,a6
+  lea dosname(pc),a1
+  moveq #0,d0 ; Use any library version.
 
-; Actual code
-	lea	DosName, a1
-	moveq   #36, d0
-	movea.l	SysBase.w, a6
-	jsr	OpenLibrary(a6)
+  jsr LVOOpenLibrary(a6)
+  tst.l d0
+  beq.b no_lib
+  move.l d0,a6
+  jsr LVOOutput(a6)
 
-	tst.l	d0	; Did it work?
-	beq.b	NoDos	; If not, we exit
-	movea.l d0, a6	; We store the pointer
+  move.l d0,d1 ; Make sure we have a CLI handle
+  beq.b no_cli
+  move.l d0, d7
 
-	moveq   #99, d4 ; number of bottles
+  move.b #$99,d5 ; bottle counter
 
-	; Invariants. These are registers we will not change.
-	; a1	volatile due to function calls (sadly)
-	lea.l	take_one(pc), a2
-	lea.l	no_more(pc), a3
-	; a6   obviously we need the ExecBase pointer
+loop:
+  bsr.s bottle(pc) ; "[counter] bottle(s)"
+  lea ofbeer(pc),a0
+  move.l a0, a2    ; store it
+  moveq #22,d3
+  bsr.w print(pc)  ; " of beer on the wall, "
+  bsr.s bottle(pc) ; "[counter] bottle(s)"
+  move.l a2, a0
+  moveq #8, d3
+  bsr.w print(pc)  ; " of beer"
+  lea period(pc),a0
+  moveq #3, d3
+  bsr.w print(pc)  ; ".[newline]"
 
-	; Print first line
-bottle_loop:
-	move.b	#'N', (a3)	; if used, we capitalize
-	bsr.s	bottletext
-	move.b	#'n', (a3)	
-	move.l	a3, d1
-	addq	#8, d1		; no_more + 8 becomes on_the_wall string
-	jsr	PutStr(a6)
-	move.l	a2, d1  	; reads the comma part of that string
-	add	#32, d1 	; but offset 32 spaces
-	jsr	PutStr(a6)
-	bsr.s 	bottletext
-	move.l	a2, d1
-	subq	#4, d1		; take_one-4 becomes period
-	jsr	PutStr(a6)
-	
-	; Print second line
-	tst.b	d4
-	beq.s	go_to_the_store
-	print	a2
-	subq.b  #1, d4		; remove one bottle
-	bra.s	go_to_the_store_end
+; drink one bottle
+  tst.b d5
+  bne.s notzero(pc)
+  move.b #$99,d5
+  bra.s zerodone(pc)
+notzero:
+  moveq #1,d2
+  sbcd d2,d5
+zerodone:        
 
-go_to_the_store:
-	moveq   #99, d4
-	move.l	a2, d1
-	add	#35, d1		; go_to_store is 35 chars after take_one
-	jsr	PutStr(a6)
+  lea takeone(pc),a0
+  moveq #31,d3
+  cmp.w #$99,d5
+  bne.s notfinal(pc)
+  lea gotostore(pc),a0
+  move.b #$21,(period)
+  addq #4,d3
+notfinal:
+  bsr.s print(pc)  ; "Take one down, pass it around, "
+  
+  bsr.s bottle(pc) ; "[counter] bottle(s)"
+  lea ofbeer(pc),a0
+  moveq #20,d3
+  bsr.s print(pc)  ; " of beer on the wall"
+  lea period(pc),a0
+  moveq #5, d3
+  bsr.s print(pc)  ; ".[newline][newline]"
+  cmp.w #$99,d5
+  bne.s loop
 
-go_to_the_store_end: 	
-	bsr.s   bottletext
-	move.l	a3, d1
-	addq	#8, d1		; no_more text + 8 becomes on_the_wall
-	jsr	PutStr(a6)
-	move.l	a2, d1
-	subq	#4, d1		; take_one - 4 becomes period text
-	jsr	PutStr(a6)
-	move.l	a2, d1
-	subq	#2, d1		; take_one - 2 becomes line break after period
-	jsr	PutStr(a6)
-	cmpi.b	#99, d4
-	bne.b	bottle_loop	
-	move.l	a6, a1
-	movea.l	SysBase.w,a6
-	jsr	CloseLibrary(a6)
+no_cli:
+  move.l a6,a1
+  move.l (ExecBase).w,a6
+  jsr LVOCloseLibrary(a6)
 
-NoDos	moveq	#0, d0
-	rts
+no_lib:
+  rts
 
-; Subroutine for printing the bottle text
-bottletext:
+bottle:
+  lea msg(pc),a0
+  moveq #15,d3
+; write value as decimal
+  move.w d5,d6
+  lsl.w #4,d6
+  lsr.b #4,d6
+  add.w #$3030,d6
+  cmp.w #$10,d5
+  bge.s twodecimals
+  and #$ff,d6
+twodecimals:
+  move.w d6,(a0)
+  cmp.b #1,d5
+  bne.s nosingular
+  subq #1,d3    
+nosingular:
+  tst.b d5
+  bne.s regular
+  add.l #15,a0
+  bchg #5,(a0)  ; flip the letter N in No More
+regular:
+  bsr.s print(pc)
+  rts
+  
+print:
+  move.l d7, d1
+  move.l a0, d2
+  jsr LVOWrite(a6)
+  rts
+  
+  cnop 0,2
 
-	lea.l	bottle(pc), a4
+msg:
+  dc.b '99 ',0,0,0,0,0,'bottles'
+  dc.b 'No more bottles'
+ofbeer:
+  dc.b ' of beer on the wall, '
+period:
+  dc.b '.',$a,$d,$a,$d
+takeone:
+  dc.b 'Take one down, pass it around, '
+gotostore:
+  dc.b 'Go to the store and buy some more, '
 
-; Echo out the number, or "no more" if bottles are 0
-	tst.b   d4
-	bne.s	bottle_count_nonzero
-	move.l	a3, d1
-	jsr	PutStr(a6)
-	addq    #2, a4	      ; a4 is set to position just after numbers
-	bra.s	bottle_count_nonzero_end
+dosname:
+  dc.b "dos.library",0
 
-bottle_count_nonzero:
-	move.l	d4, d5
-	divu.w	#10, d5
-	move.w	#$3030, (a4)  ; We set the first two letters of bottle to '0'
-	add.b	d5, (a4)+     ; Incrementing a4 and adding first number, thus-
-	move.l	a4, a5	      ; ...storing a4+1 as a5, and then...
-	addq	#8, a5	      ; ...we can addq to just reach bottle plural pos!
-	swap	d5	      ; we swap the remainder and quotient
-	add.b   d5, (a4)
-	cmpi.w	#9, d4
-	bls.s	bottle_count_nonzero_end
-	subq	#1, a4
-
-bottle_count_nonzero_end:
-	move.b	#'s', (a5)    ; now we can add plural letter by indirection 
-
-; Fix the suffix (if the number of bottles is 1, no 's'
-	cmpi.b	#1, d4
-	bne.s	post_removed_s
-	move.b	#30, (a5)     ; empty letter for nonplural situations
-	
-post_removed_s:
-	print a4	      ; finally we echo the constructed bottle text
-	rts
-
-; Data
-
-DosName		dc.b	"dos.library",0
-bottle		dc.b	"xx bottles of beer",0
-no_more		dc.b    "no more",0
-on_the_wall	dc.b	" on the wall",0
-period		dc.b	". ",10,0
-take_one	dc.b	"Take one down and pass it around, ",0
-go_to_store	dc.b	"Go to the store and buy some more, ",0
+  cnop 0,2
