@@ -1,3 +1,32 @@
+; Name:	99 bottles of beer on the wall.
+; Author:	Björn Paulsen
+; Version:	1.7 (final)
+; Assembler:	ASM-Two 0.96w
+; Size:	404 bytes (optimized)
+; 
+; For those who always wanted a drinking song on the Amiga, this 
+; routine is just the thing. It prints out the full text of the drinking 
+; song "99 Bottles of Beer on the Wall," and is polite about being run
+; outside of a Dos environment (i.e. won't crash the Amiga).
+;
+; Some optimizations have been made, most saliently the branching and
+; use of an address register to move the starting address of a string.
+; PC-relative addressing worked wonders, but the single biggest impact
+; was consolidating the data as much as possible: fewer but longer 
+; strings mean fewer syscalls to print them, and it all adds up.
+; Also, the 68000 processor having BDC arithmetic proved helpful;
+; it meant I could drop conversion routines.
+;
+; Other optimizations may suggest themselves. If you see them, please
+; give me a shout-out. Right now, the address registers are used to
+; store and reuse string addresses, and we also use some offsets,
+; which though it looks horrible does confer space savings.
+; 
+; Note: This routine has been rewritten to be compliant with OS 1.3. 
+; It's still reasonably compact, I feel, but v36 in general and PutStr()
+; in particular would have been very helpful. The previous version 
+; would crash a typical A500 or A200; while this version is a mere
+; 8 bytes larger, the tradeoff would seem to be worth it.
 
 ExecBase:        equ 4
 LVOOpenLibrary:  equ -552
