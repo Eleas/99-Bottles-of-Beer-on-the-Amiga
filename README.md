@@ -28,7 +28,8 @@ My original executable was 624 bytes in size, and didn't work on an A500. This o
 Anyhow, painstaking optimization forced me to learn the code, which was surprisingly useful. This is fairly simple code, but even so, I found at least five fatal bugs, all because I had to pay attention.
 
 # What were the lessons learned, then?
-* With a bit of thought, you can write fairly efficient code without sacrificing clarity.
+* With just a bit of thought, you can write fairly efficient code without sacrificing clarity.
+* If you go beyond that, you can achieve dramatic gains in speed and/or memory footprint, at the cost of flexibility and clarity.
 * What happens under the hood of the computer is always simpler than you think.
 * If you can manipulate data in a register, do it.
 * Organization of your code can matter on a byte level (i.e. jumps can be made shorter, addressing made PC-relative, and string data reused).
@@ -37,6 +38,7 @@ Anyhow, painstaking optimization forced me to learn the code, which was surprisi
 * Don't overthink. Cutting text up into chunks looked more efficient (allowing for reuse, I thought), but in practice turned out the reverse.
 * Correct choice of algorithm will have a much bigger impact on your code than piecemeal tweaking.
 * Always comment. Your comments are what help you spot opportunity for improvements.
+* Don't overcomment. Since Assembler is so low-level, there's not a lot of semantic meaning in individual instructions, so comment judiciously.  
 * Seriously, OS 2.0 was a massive improvement. I mean it.
 
 # Does this have any practical applications?
