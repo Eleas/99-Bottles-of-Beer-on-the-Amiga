@@ -26,7 +26,7 @@
 ; It's still reasonably compact, I feel, but v36 in general and PutStr()
 ; in particular would have been very helpful. The previous version 
 ; would crash a typical A500 or A200; while this version is a mere
-; 8 bytes larger, the tradeoff would seem to be worth it.
+; 4 bytes larger, the tradeoff would seem to be worth it.
 
 ExecBase:        equ 4
 LVOOpenLibrary:  equ -552
