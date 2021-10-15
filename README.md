@@ -11,7 +11,7 @@ Well, you see, there's this old drinking song (possibly apocryphal) that starts,
 
 I thought I'd do something with the concept, so I produced this monstrosity. When run, the 99bottles routine prints out the lyrics of the song in CLI. That's all it does. Although in fairness, it does its particular job very well indeed: Assembler can be tortured into a most compact form if you apply yourself.
 
-Previous versions broke compatibility with any OS version before 2.0, because I make stupid mistakes. That grated on me, so I decided to finally get a working version up on GitHub. Now I can finally stick a fork in this bastard and pronounce it done.
+For developers used to modern systems, it also has its pitfalls. Previous versions broke compatibility with any OS version before 2.0, because I make stupid mistakes. This evinced itself in the application promptly crashing any Amiga that wasn't OS 2.0 or above. That grated on me, so I decided to finally get a working version up on GitHub. Now I can finally stick a fork in this bastard and pronounce it done.
 
 # Isn't this program useless? I mean, entirely useless? Why write this?
 Yes, yes, and for two reasons. 
