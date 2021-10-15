@@ -7,7 +7,7 @@ Used to be the future.
 Seriously, though, an explanation would take too long. Suffice to say it was a 7 MHz home computer produced by Commodore when I was a boy. At least 10 years ahead of its time, it regularly ran rings around machines with ten times the clock speed and memory. To this day, it remains my favorite computer.
 
 # So what's this?
-Well, you see, there's this old drinking song (possibly apocryphal) that starts, "99 bottles of beer on the wall...". The lyrics repeat one hundred times, then the song ends. It's like the Ten Days of Christmas, only it'll leave you short one liver.
+Well, you see, there's this old drinking song (possibly apocryphal) that starts, "99 bottles of beer on the wall...". The lyrics repeat one hundred times, then the song ends. It's like the Ten Days of Christmas, only it'll leave you without a functioning liver.
 
 I thought I'd do something with the concept, so I produced this monstrosity. When run, the 99bottles routine prints out the lyrics of the song in CLI. That's all it does. Although in fairness, it does its particular job very well indeed: Assembler can be tortured into a most compact form if you apply yourself.
 
