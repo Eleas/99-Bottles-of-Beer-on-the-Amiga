@@ -114,7 +114,7 @@ bottle:
 twodecimals:
   move.w d6,(a0)
   moveq #1,d2
-  cmp.b d1,d5
+  cmp.b d2,d5
   bne.s nosingular
   subq #1,d3    
 nosingular:
