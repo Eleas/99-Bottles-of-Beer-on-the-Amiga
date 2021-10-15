@@ -16,14 +16,14 @@ For developers used to modern systems, it also has its pitfalls. Previous versio
 # Isn't this program useless? I mean, entirely useless? Why write this?
 Yes, yes, and for two reasons. 
 
-One, I always wanted to learn Assembler, and it turned out to be surprisingly fun. Two, it's an exercise in optimization and really, truly understanding both the code and the underlying hardware.
+One, I always wanted to learn Assembler, and it turned out to be surprisingly fun. Two, it's an exercise in optimization and really, truly understanding both the code and the underlying hardware (although the last doesn't particularly apply in this instance).
 
-Optimization is for size, not speed, by the way. In terms of speed, this routine is wasteful.
+Optimization is for size in this specific case, by the way, rather than speed. In terms of clock cycles, this routine is wasteful.
 
 # How's that, exactly?
-Modern platforms have all the memory and number-crunching power you need. That breeds laziness. The Amiga doesn't reward that: it rewards exactitude and, to some degree, art. When you write code like this, you learn to be creative. You need to be. 
+Modern platforms have all the memory and number-crunching power you need. That abundance breeds laziness. The Amiga doesn't reward that: it rewards exactitude and, to some degree, art. When you write code like this, you learn to be creative, or you can't achieve decent results. 
 
-My original executable was 624 bytes in size, and didn't work on an A500. This one is 404 bytes, and can be optimized further. Not that I feel so inclined at the moment.
+Just by being moderately clever in the ordering of strings, for instance, I managed some hefty improvements. The original executable was 624 bytes in size, and didn't work on an A500. This one is a mere 404 bytes, works on any Amiga out there, and can likely be optimized further. Not that I feel so inclined at the moment.
 
 Anyhow, painstaking optimization forced me to learn the code, which was surprisingly useful. This is fairly simple code, but even so, I found at least five fatal bugs, all because I had to pay attention.
 
