@@ -23,7 +23,7 @@ Optimization is for size in this specific case, by the way, rather than speed. I
 # How's that, exactly?
 Modern platforms have all the memory and number-crunching power you need. That abundance breeds laziness. The Amiga doesn't reward that: it rewards exactitude and, to some degree, art. When you write code like this, you learn to be creative, or you can't achieve decent results. 
 
-Just by being moderately clever in the ordering of strings, for instance, I managed some hefty improvements. The original executable was 624 bytes in size, and didn't work on an A500. This one is a mere 396 bytes in size, works on any Amiga out there, and can likely be optimized further. Not that I feel so inclined at the moment.
+Just by being moderately clever in the ordering of strings, for instance, I managed some hefty improvements. The original executable was 624 bytes in size, and didn't work on an A500. This one is a mere 392 bytes in size, works on any Amiga out there, and can likely be optimized further. I really should stop at this point.
 
 Anyhow, painstaking optimization forced me to learn the code, which was surprisingly useful. This is fairly simple code, but even so, I found at least five fatal bugs, all because I had to pay attention.
 
@@ -38,7 +38,8 @@ Anyhow, painstaking optimization forced me to learn the code, which was surprisi
 * Don't overthink. Cutting text up into chunks looked more efficient (allowing for reuse, I thought), but in practice turned out the reverse.
 * Correct choice of algorithm will have a much bigger impact on your code than piecemeal tweaking.
 * Always comment. Your comments are what help you spot opportunity for improvements.
-* Don't overcomment. Since Assembler is so low-level, there's not a lot of semantic meaning in individual instructions, so comment judiciously.  
+* Don't overcomment. Since Assembler is so low-level, there's not a lot of semantic meaning in individual instructions, so comment judiciously.
+* The stack is your friend. Subroutines can easily be chained simply by eschewing rts and jsr and branching.  
 * Seriously, OS 2.0 was a massive improvement. I mean it.
 
 # Does this have any practical applications?
