@@ -2,7 +2,7 @@
 ; Author:	Björn Paulsen
 ; Version:	1.7 (final)
 ; Assembler:	ASM-Two 0.96w
-; Size:	400 bytes (optimized)
+; Size:	396 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -24,9 +24,7 @@
 ; 
 ; Note: This routine has been rewritten to be compliant with OS 1.3. 
 ; It's still reasonably compact, I feel, but v36 in general and PutStr()
-; in particular would have been very helpful. The previous version 
-; would crash a typical A500 or A200; while this version is a mere
-; 4 bytes larger, the tradeoff would seem to be worth it.
+; in particular would have been very helpful.
 
 ExecBase:        equ 4
 LVOOpenLibrary:  equ -552
