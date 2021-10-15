@@ -4,26 +4,28 @@ Implements the song "99 Bottles of Beer on the Wall" in a CLI window.
 # What's an Amiga?
 Used to be the future. 
 
-Seriously, though, an explanation would take too long. Suffice to say it was a 7 MHz home computer produced by Commodore when I was a boy. It was at least 10 years ahead of its time, and regularly ran rings around machines with ten times the clock speed and memory. To this day, it remains my favorite computer.
+Seriously, though, an explanation would take too long. Suffice to say it was a 7 MHz home computer produced by Commodore when I was a boy. At least 10 years ahead of its time, it regularly ran rings around machines with ten times the clock speed and memory. To this day, it remains my favorite computer.
 
 # So what's this?
 Well, you see, there's this old drinking song (possibly apocryphal) that starts, "99 bottles of beer on the wall...". The lyrics repeat one hundred times, then the song ends. It's like the Ten Days of Christmas, only it'll leave you short one liver.
 
-So, I thought I'd do something with the concept. When run, the 99bottles routine prints out the lyrics of the song in CLI. This works only on OS 2.0 and up, because I make stupid mistakes.
+I thought I'd do something with the concept, so I produced this monstrosity. When run, the 99bottles routine prints out the lyrics of the song in CLI. That's all it does. Although in fairness, it does its particular job very well indeed: Assembler can be tortured into a most compact form if you apply yourself.
+
+Previous versions broke compatibility with any OS version before 2.0, because I make stupid mistakes. That grated on me, so I decided to finally get a working version up on GitHub. Now I can finally stick a fork in this bastard and pronounce it done.
 
 # Isn't this program useless? I mean, entirely useless? Why write this?
 Yes, yes, and for two reasons. 
 
-One, I always wanted to learn Assembly, and it turned out to be surprisingly fun. Two, it's an exercise in optimization and really, truly understanding both the code and the underlying hardware.
+One, I always wanted to learn Assembler, and it turned out to be surprisingly fun. Two, it's an exercise in optimization and really, truly understanding both the code and the underlying hardware.
 
-Optimization is for size, not speed, by the way. In terms of speed, it's downright inefficient.
+Optimization is for size, not speed, by the way. In terms of speed, this routine is wasteful.
 
 # How's that, exactly?
 Modern platforms have all the memory and number-crunching power you need. That breeds laziness. The Amiga doesn't reward that: it rewards exactitude and, to some degree, art. When you write code like this, you learn to be creative. You need to be. 
 
-The original executable was 624 bytes in size. Just by optimizing and being moderately clever I was able to trim off 76 bytes while retaining readability. By hook and crook, and finally sacrificing legibility, I eventually shaved off another 92 bytes. And in a fit of insanity, I then doubled down to bring it down another 64 bytes, to 396 bytes. I could go another 10 or so, I think, but I doubt there's much more give in the data at this point.
+My original executable was 624 bytes in size, and didn't work on an A500. This one is 404 bytes, and can be optimized further. Not that I feel so inclined at the moment.
 
-Anyhow, painstaking optimization forced me to learn the code, which was surprisingly useful. This is fairly simple code, but even so, I found at least two fatal bugs, all because I had to pay attention.
+Anyhow, painstaking optimization forced me to learn the code, which was surprisingly useful. This is fairly simple code, but even so, I found at least five fatal bugs, all because I had to pay attention.
 
 # What were the lessons learned, then?
 * With a bit of thought, you can write fairly efficient code without sacrificing clarity.
@@ -37,5 +39,5 @@ Anyhow, painstaking optimization forced me to learn the code, which was surprisi
 * Always comment. Your comments are what help you spot opportunity for improvements.
 * Seriously, OS 2.0 was a massive improvement. I mean it.
 
-# Does this have any practical application?
+# Does this have any practical applications?
 Unless you're soon to be stuck in a cabin in the woods with only an Amiga and a lot of beer for company, I doubt it. If by some chance this actually happens to you and my code managed to be of assistance, I would be absolutely _delighted_ to hear from you.
