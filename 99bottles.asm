@@ -103,7 +103,7 @@ no_lib:
 
 bottle:
   lea msg(pc),a0
-  moveq #15,d3
+  moveq #10,d3
 ; write value as decimal
   move.w d5,d6
   lsl.w #4,d6
@@ -121,7 +121,8 @@ twodecimals:
 nosingular:
   tst.b d5
   bne.s regular
-  add.l #15,a0
+  add.l #10,a0
+  addq #5,d3
   bchg #5,(a0)  ; flip the letter N in No More
 regular:
   bra.w print(pc)
@@ -136,7 +137,7 @@ print:
   cnop 0,2
 
 msg:
-  dc.b '99 ',0,0,0,0,0,'bottles'
+  dc.b '99 bottles'
   dc.b 'No more bottles'
 ofbeer:
   dc.b ' of beer on the wall, '
