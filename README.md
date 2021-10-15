@@ -23,7 +23,7 @@ Optimization is for size in this specific case, by the way, rather than speed. I
 # How's that, exactly?
 Modern platforms have all the memory and number-crunching power you need. That abundance breeds laziness. The Amiga doesn't reward that: it rewards exactitude and, to some degree, art. When you write code like this, you learn to be creative, or you can't achieve decent results. 
 
-Just by being moderately clever in the ordering of strings, for instance, I managed some hefty improvements. The original executable was 624 bytes in size, and didn't work on an A500. This one is a mere 404 bytes, works on any Amiga out there, and can likely be optimized further. Not that I feel so inclined at the moment.
+Just by being moderately clever in the ordering of strings, for instance, I managed some hefty improvements. The original executable was 624 bytes in size, and didn't work on an A500. This one is a mere 400 bytes, works on any Amiga out there, and can likely be optimized further. Not that I feel so inclined at the moment.
 
 Anyhow, painstaking optimization forced me to learn the code, which was surprisingly useful. This is fairly simple code, but even so, I found at least five fatal bugs, all because I had to pay attention.
 
