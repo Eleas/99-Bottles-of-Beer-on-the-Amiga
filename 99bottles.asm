@@ -1,8 +1,8 @@
 ; Name:	99 bottles of beer on the wall.
 ; Author:	Björn Paulsen
-; Version:	1.7 (final)
+; Version:	1.8 (final)
 ; Assembler:	ASM-Two 0.96w
-; Size:	396 bytes (optimized)
+; Size:	392 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -23,14 +23,15 @@
 ; which though it looks horrible does confer space savings.
 ; 
 ; Note: This routine has been rewritten to be compliant with OS 1.3. 
-; It's still reasonably compact, I feel, but v36 in general and PutStr()
-; in particular would have been very helpful.
+; Though it's still smaller, I suspect v36 in general and PutStr()
+; in particular would have been helpful in reducing it still more.
 
 ExecBase:        equ 4
 LVOOpenLibrary:  equ -552
 LVOCloseLibrary: equ -414
 LVOOutput:       equ -60
 LVOWrite:        equ -48
+
 
   move.l (ExecBase).w,a6
   lea dosname(pc),a1
@@ -67,7 +68,7 @@ loop:
   move.b #$99,d5
   bra.s zerodone(pc)
 notzero:
-  moveq #1,d2
+  moveq #1,d2  ; faster comparison than testing
   sbcd d2,d5
 zerodone:
 
@@ -100,7 +101,7 @@ no_lib:
   rts
 
 bottle:
-  lea msg(pc),a0
+  lea bottles(pc),a0
   moveq #10,d3
 ; write value as decimal
   move.w d5,d6
@@ -119,23 +120,23 @@ twodecimals:
 nosingular:
   tst.b d5
   bne.s regular
-  add.l #10,a0
+  lea no_bottles(pc),a0
   addq #5,d3
   bchg #5,(a0)  ; flip the letter N in No More
 regular:
-  bra.w print(pc)
+  bra.w print(pc)  ; branches to let print return
   
 print:
   move.l d7, d1
   move.l a0, d2
-  jsr LVOWrite(a6)
-  rts
+  jmp LVOWrite(a6) ; branches to let LVOWrite return
 
 
   cnop 0,2
 
-msg:
+bottles:
   dc.b '99 bottles'
+no_bottles:
   dc.b 'No more bottles'
 ofbeer:
   dc.b ' of beer on the wall, '
