@@ -1,8 +1,8 @@
 ; Name:	99 bottles of beer on the wall.
 ; Author:	Björn Paulsen
-; Version:	1.8 (final)
+; Version:	1.9 (final)
 ; Assembler:	ASM-Two 0.96w
-; Size:	392 bytes (optimized)
+; Size:	396 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -22,9 +22,10 @@
 ; store and reuse string addresses, and we also use some offsets,
 ; which though it looks horrible does confer space savings.
 ; 
-; Note: This routine has been rewritten to be compliant with OS 1.3. 
-; Though it's still smaller, I suspect v36 in general and PutStr()
-; in particular would have been helpful in reducing it still more.
+; Note: This routine has been rewritten to be compliant with OS 1.3, 
+; resulting in a binary of the exact same size. 
+; I suspect v36 in general and PutStr() in particular would have
+; been helpful in reducing it still more.
 
 ExecBase:        equ 4
 LVOOpenLibrary:  equ -552
@@ -46,27 +47,27 @@ LVOWrite:        equ -48
   move.l d0,d7 ; Make sure we have a CLI handle
   beq.b no_cli
 
-  move.b #$99,d5 ; bottle counter
+  move.l #$99,d5 ; bottle counter
 
 loop:
-  bsr.s bottle(pc) ; "[counter] bottle(s)"
+  bsr.s bottle ; "[counter] bottle(s)"
   lea ofbeer(pc),a0
   move.l a0, a2    ; store it
   moveq #22,d3
-  bsr.w print(pc)  ; " of beer on the wall, "
-  bsr.s bottle(pc) ; "[counter] bottle(s)"
+  bsr.w print  ; " of beer on the wall, "
+  bsr.s bottle ; "[counter] bottle(s)"
   exg a2, a0
   moveq #8, d3
-  bsr.w print(pc)  ; " of beer"
+  bsr.w print  ; " of beer"
   lea period(pc),a0
   moveq #3, d3
-  bsr.w print(pc)  ; ".[newline]"
+  bsr.w print  ; ".[newline]"
 
 ; drink one bottle
   tst.b d5
-  bne.s notzero(pc)
+  bne.s notzero
   move.b #$99,d5
-  bra.s zerodone(pc)
+  bra.s zerodone
 notzero:
   moveq #1,d2  ; faster comparison than testing
   sbcd d2,d5
@@ -75,20 +76,20 @@ zerodone:
   lea takeone(pc),a0
   moveq #31,d3
   cmp.w #$99,d5
-  bne.s notfinal(pc)
+  bne.s notfinal
   lea gotostore(pc),a0
   move.b #$21,(period)
   addq #4,d3
 notfinal:
   bsr.s print(pc)  ; "Take one down, pass it around, "
   
-  bsr.s bottle(pc) ; "[counter] bottle(s)"
+  bsr.s bottle ; "[counter] bottle(s)"
   lea ofbeer(pc),a0
   moveq #20,d3
-  bsr.s print(pc)  ; " of beer on the wall"
+  bsr.s print  ; " of beer on the wall"
   lea period(pc),a0
   moveq #5, d3
-  bsr.s print(pc)  ; ".[newline][newline]"
+  bsr.s print  ; ".[newline][newline]"
   cmp.w #$99,d5
   bne.s loop
 
@@ -124,7 +125,7 @@ nosingular:
   addq #5,d3
   bchg #5,(a0)  ; flip the letter N in No More
 regular:
-  bra.w print(pc)  ; branches to let print return
+  bra.w print  ; branches to let print return
   
 print:
   move.l d7, d1
