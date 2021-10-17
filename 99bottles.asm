@@ -1,5 +1,5 @@
 ; Name:	99 bottles of beer on the wall.
-; Author:	BjÃ¶rn Paulsen
+; Author:	Björn Paulsen
 ; Version:	1.9 (final)
 ; Assembler:	ASM-Two 0.96w
 ; Size:	396 bytes (optimized)
@@ -152,4 +152,3 @@ dosname:
   dc.b "dos.library",0
 
   cnop 0,2
-
