@@ -1,5 +1,5 @@
 ; Name:	99 bottles of beer on the wall.
-; Author:	Björn Paulsen
+; Author:	BjÃ¶rn Paulsen
 ; Version:	1.9.1 (final)
 ; Assembler:	ASM-Two 0.96w
 ; Size:	392 bytes (optimized)
@@ -124,13 +124,12 @@ nosingular:
   bne.s print
   lea no_bottles(pc),a0
   addq #5,d3
-  bchg #5,(a0)  ; flip the letter N in No More
+  bchg #5,(a0)  ; case-flip the letter N in 'No more'
   
 print:
   move.l d7, d1
   move.l a0, d2
   jmp LVOWrite(a6) ; branches to let LVOWrite return
-
 
   cnop 0,2
 
