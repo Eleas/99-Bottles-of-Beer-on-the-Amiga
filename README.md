@@ -1,5 +1,5 @@
 # 99 Bottles of Beer, Amiga style
-Echoes lyrics to "99 Bottles of Beer on the Wall" to CLI.
+Echoes lyrics of "99 Bottles of Beer on the Wall" to CLI.
 
 # What's an Amiga?
 Used to be the future. 
