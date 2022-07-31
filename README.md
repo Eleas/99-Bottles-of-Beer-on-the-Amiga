@@ -39,8 +39,9 @@ Anyhow, painstaking optimization forced me to learn the code, which was surprisi
 * Correct choice of algorithm will have a much bigger impact on your code than piecemeal tweaking.
 * Always comment. Your comments are what help you spot opportunity for improvements.
 * Don't overcomment. Since Assembler is so low-level, there's not a lot of semantic meaning in individual instructions, so comment judiciously.
-* The stack is your friend. Subroutines can easily be chained simply by eschewing rts and jsr and branching.  
-* Seriously, OS 2.0 was a massive improvement. I mean it.
+* Stack is your friend. Subroutines can easily be chained simply by eschewing rts and jsr and branching.  
+* OS 2.0 was a massive improvement. It's really kind of amazing.
+* In Asm, cryptic comments are nobody's friend.
 
 # Does this have any practical applications?
 Unless you're soon to be stuck in a cabin in the woods with only an Amiga and a lot of beer for company, I doubt it. If by some chance this actually happens to you and my code managed to be of assistance, I would be absolutely _delighted_ to hear from you.
