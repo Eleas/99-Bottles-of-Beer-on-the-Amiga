@@ -1,8 +1,8 @@
-; Name:	99 bottles of beer on the wall.
+ùúùú                                        ; Name:	99 bottles of beer on the wall.
 ; Author:	Björn Paulsen
-; Version:	1.9.1 (final)
-; Assembler:	ASM-Two 0.96w
-; Size:	392 bytes (optimized)
+; Version:	1.9.2
+; Assembler:	ASM-one V1.48
+; Size:	376 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -58,17 +58,12 @@ loop:
   bsr.s bottle ; "[counter] bottle(s)"
   exg a2, a0
   moveq #8, d3
-  bsr.w print  ; " of beer"
+  bsr.b print  ; " of beer"
   lea period(pc),a0
   moveq #3, d3
-  bsr.w print  ; ".[newline]"
+  bsr.b print  ; ".[newline]"
 
 ; drink one bottle
-  tst.b d5
-  bne.s notzero
-  move.b #$99,d5
-  bra.s zerodone
-notzero:
   moveq #1,d2  ; faster comparison than testing
   sbcd d2,d5
 zerodone:
@@ -131,7 +126,7 @@ print:
   move.l a0, d2
   jmp LVOWrite(a6) ; branches to let LVOWrite return
 
-  cnop 0,2
+  
 
 bottles:
   dc.b '99 bottles'
