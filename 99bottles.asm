@@ -64,9 +64,8 @@ loop:
   bsr.b print  ; ".[newline]"
 
 ; drink one bottle
-  moveq #1,d2  ; faster comparison than testing
+  moveq #1,d2
   sbcd d2,d5
-zerodone:
 
   lea takeone(pc),a0
   moveq #31,d3
