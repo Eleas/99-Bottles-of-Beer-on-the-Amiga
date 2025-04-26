@@ -1,8 +1,8 @@
-ùúùú                                        ; Name:	99 bottles of beer on the wall.
-; Author:	Björn Paulsen
+; Name:	99 bottles of beer on the wall.
+; Author:	Bj�rn Paulsen
 ; Version:	1.9.2
 ; Assembler:	ASM-one V1.48
-; Size:	376 bytes (optimized)
+; Size:	368 bytes (optimized)
 ; 
 ; For those who always wanted a drinking song on the Amiga, this 
 ; routine is just the thing. It prints out the full text of the drinking 
@@ -50,22 +50,18 @@ LVOWrite:        equ -48
   move.l #$99,d5 ; bottle counter
 
 loop:
-  bsr.s bottle ; "[counter] bottle(s)"
-  lea ofbeer(pc),a0
-  move.l a0, a2    ; store it
-  moveq #22,d3
-  bsr.w print  ; " of beer on the wall, "
-  bsr.s bottle ; "[counter] bottle(s)"
-  exg a2, a0
-  moveq #8, d3
-  bsr.b print  ; " of beer"
+  moveq #22, d4
+  bsr.b bottles_of_beer_on_the_wall
+  moveq #8,d4
+  bsr.b bottles_of_beer_on_the_wall
   lea period(pc),a0
   moveq #3, d3
   bsr.b print  ; ".[newline]"
 
 ; drink one bottle
-  moveq #1,d2
+  moveq #1,d2  ; faster comparison than testing
   sbcd d2,d5
+zerodone:
 
   lea takeone(pc),a0
   moveq #31,d3
@@ -77,11 +73,9 @@ loop:
 
 notfinal:
   bsr.s print  ; "Take one down, pass it around, "
-  
-  bsr.s bottle ; "[count] bottle(s)"
-  lea ofbeer(pc),a0
-  moveq #20,d3
-  bsr.s print  ; " of beer on the wall"
+
+  moveq #20,d4
+  bsr.s bottles_of_beer_on_the_wall
   lea period(pc),a0
   moveq #5, d3
   bsr.s print  ; ".[break][break]"
@@ -94,6 +88,13 @@ no_cli:
   jsr LVOCloseLibrary(a6)
 
 no_lib:
+  rts
+
+bottles_of_beer_on_the_wall:
+  bsr.s bottle ; "[counter] bottle(s)"
+  move.l d4,d3
+  lea ofbeer(pc), a0
+  bsr.b print ; "of beer on the wall"
   rts
 
 bottle:
@@ -119,14 +120,13 @@ nosingular:
   lea no_bottles(pc),a0
   addq #5,d3
   bchg #5,(a0)  ; case-flip the letter N in 'No more'
-  
+
 print:
   move.l d7, d1
   move.l a0, d2
   jmp LVOWrite(a6) ; branches to let LVOWrite return
 
   
-
 bottles:
   dc.b '99 bottles'
 no_bottles:
